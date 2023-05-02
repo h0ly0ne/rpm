@@ -71,6 +71,7 @@ part.exe: $(EXT_OBJ) $(PART_OBJ) $(ADDON_OBJ)
 	  part.exe
 !
 	helper -fix_exe part.exe
+	.\exesplit\split.exe
 
 part_cmd.exe: $(EXT_OBJ) $(PCMD_OBJ)
 	$(LD) @&&!

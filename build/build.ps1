@@ -142,18 +142,9 @@ finally
 	Write-Host "- Releasing files";
 	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\part.exe')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
 	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\part.org')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
+	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\xrpart*.xxf')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
 	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\sources.zip')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
 	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\release.zip')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
-
-	##############################
-	# Preparing release for XOSL #
-	##############################
-	Write-Host "- Preparing release for XOSL";
-	if (Test-Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\part.org'))) {
-		$process_split = Start-Process -NoNewWindow -WorkingDirectory $(Get-Item $PSScriptRoot) -FilePath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\unxutils\split.exe')) -ArgumentList "-b","32768",$([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\part.org')),'XRPART' -PassThru;
-		$process_split.WaitForExit();
-	}
-	[ref]$i = 0; Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) XRPART* | Rename-Item -NewName { '{0}{1:d2}{2}' -f "XRPART", $i.value++, ".XXF" };
 
 	#########################
 	# Cleaning up processes #

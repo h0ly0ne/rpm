@@ -11,4 +11,5 @@ del part_msg.c
 del part_msg.h
 del part.exe
 del part.org
+del xrpart0*.xxf
 del helper.exe
