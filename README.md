@@ -161,7 +161,10 @@ by choosing one of the provided options.
 ### Building tools
 
 `32rtm version 1.5 Copyright (c) 1992-94 Borland International`<br />
+`Borland C++ 5.0 Copyright (c) 1987, 1996 Borland International`<br />
 `Borland C++ 5.0 for Win32 Copyright (c) 1993, 1996 Borland International`<br />
+`Borland C++ Preprocessor 5.0 Copyright (c) 1987, 1996 Borland International`<br />
+`Borland C++ Preprocessor 5.0 for Win32 Copyright (c) 1993, 1996 Borland International`<br />
 `MAKE Version 4.0  Copyright (c) 1987, 1996 Borland International`<br />
 `RTM loader version 1.5 Copyright (c) 1990-94 Borland International`<br />
 `Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International`<br />
