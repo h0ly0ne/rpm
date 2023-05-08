@@ -32,7 +32,7 @@ if(-not(Test-path $folder_dosboxx -PathType Container)) {
 # Starting cleaning source process #
 ####################################
 Write-Host "- Cleaning up source";
-$process_dosboxx = Start-Process -NoNewWindow -WorkingDirectory $(Get-Item $PSScriptRoot) -FilePath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x\dosbox-x.exe')) -ArgumentList "-conf",$([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x.conf')),"-fastlaunch","-log-con","-silent","-c ""T:\CLEAN.BAT""" -PassThru;
+$process_dosboxx = Start-Process -NoNewWindow -WorkingDirectory $(Get-Item $PSScriptRoot) -FilePath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x\dosbox-x.exe')) -ArgumentList "-conf",$([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x.conf')),"-fastlaunch","-log-con","-silent","-c ""S:""","-c ""MAKE CLEAN""" -PassThru;
 $process_dosboxx_instances = 1;
 
 try {
@@ -98,7 +98,7 @@ Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSS
 Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.exe | ForEach-Object { Remove-Item -Path $_.FullName }
 Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.org | ForEach-Object { Remove-Item -Path $_.FullName }
 Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.log | ForEach-Object { Remove-Item -Path $_.FullName }
-Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) xrpart*.xxf | ForEach-Object { Remove-Item -Path $_.FullName }
+Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.xxf | ForEach-Object { Remove-Item -Path $_.FullName }
 $file_buildlog = [IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\build.log');
 if(Test-path $file_buildlog) { Remove-Item $file_buildlog; }
 New-Item $file_buildlog | Out-Null;

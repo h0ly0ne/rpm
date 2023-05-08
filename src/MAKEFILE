@@ -1,118 +1,249 @@
 # Tools:
 #
-#  MAKE Version 4.0  Copyright (c) 1987, 1996 Borland International
-#  Borland C++ 5.0 for Win32  Copyright (c) 1993, 1996 Borland International
-#  Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
-#  Turbo Link  Version 7.1.30.1  Copyright (c) 1987, 1996 Borland International
-#
-# In order to make this project you must disable default compilation rules in
-# file "bc5\bin\builtins.mak" (because we compile C -> ASM -> OBJ, not C->OBJ)
+# 32rtm version 1.5 Copyright (c) 1992-94 Borland International
+# Borland C++ 5.0 Copyright (c) 1987, 1996 Borland International
+# Borland C++ 5.0 for Win32 Copyright (c) 1993, 1996 Borland International
+# Borland C++ Preprocessor 5.0 Copyright (c) 1987, 1996 Borland International
+# Borland C++ Preprocessor 5.0 for Win32 Copyright (c) 1993, 1996 Borland International
+# MAKE Version 4.0  Copyright (c) 1987, 1996 Borland International
+# RTM loader version 1.5 Copyright (c) 1990-94 Borland International
+# Turbo Assembler  Version 3.1  Copyright (c) 1988, 1992 Borland International
+# Turbo Link  Version 7.1.30.1. Copyright (c) 1987, 1996 Borland International
+# Turbo Link for Win32  Version 1.6.71.0 Copyright (c) 1993,1996 Borland International
 
-AS = tasm /ml /m3 /l
-CC = bcc32 -d -O -O2 -S -u- -x-
-LD = tlink -m -M -s -C -l -3 -c
+MAKEROOT=$(MAKEDIR)\..
 
-.cpp.obj:
-	$(CC)  -o$&.asx $&.cpp
-	helper -fix_asm $&.asx
-	$(AS)  $&.asx
+INCPATH=$(MAKEROOT)\INCLUDE
+LIBPATH=$(MAKEROOT)\LIB
+
+ASM_OPTIONS=/ml /m3 /l
+C_OPTIONS=-d -O -O2 -S -u- -x- -I$(INCPATH);.
+CPP_OPTIONS=-d -O -O2 -S -u- -x- -I$(INCPATH);.
+LINK_OPTIONS=-m -M -s -C -l -3 -c /L$(LIBPATH);.
+HELPER_C_OPTIONS=-d -O -O2 -x- -I$(INCPATH);.
+EXESPLIT_C_OPTIONS=-O2 -mc -3 -c -d -j6 -I$(INCPATH);.
+
+ASM=$(MAKEDIR)\TASM $(ASM_OPTIONS)
+C=$(MAKEDIR)\BCC $(C_OPTIONS)
+CPP=$(MAKEDIR)\BCC32 $(CPP_OPTIONS)
+LINK=$(MAKEDIR)\TLINK $(LINK_OPTIONS)
+HELPER_C=$(MAKEDIR)\BCC $(HELPER_C_OPTIONS)
+EXESPLIT_C=$(MAKEDIR)\BCC $(EXESPLIT_C_OPTIONS)
+
+EXE_FILE=PART.EXE
+MAP_FILE=PART.MAP
+OBJ_FILE=PART.OBJ
+ORG_FILE=PART.ORG
+HELPER_EXE_FILE=HELPER.EXE
+HELPER_SRC_FILE=HELPER.C
+HELPER_OBJ_FILE=HELPER.OBJ
+HELPER_ORG_FILE=HELPER.ORG
+EXESPLIT_EXE_FILE=EXESPLIT.EXE
+EXESPLIT_SRC_FILE=EXESPLIT.C
+EXESPLIT_MAP_FILE=EXESPLIT.MAP
+EXESPLIT_OBJ_FILE=EXESPLIT.OBJ
+EXESPLIT_ORG_FILE=EXESPLIT.ORG
+
+LNG=CS DE ES FR IT NL RU SV
+
+EXT_OBJ = EXT32.OBJ EXT32CPP.OBJ EXT32LIB.OBJ EXT32MEM.OBJ
+PART_OBJ = IPL.OBJ BOOT_F1X.OBJ BMBOOT.OBJ PART_AUX.OBJ PART_BMG.OBJ PART_CMD.OBJ PART_DSK.OBJ PART_FAT.OBJ PART_GUI.OBJ PART_TAB.OBJ PART_VTC.OBJ PART_WIZ.OBJ PART_ZIP.OBJ
+ADDON_OBJ = GUI.OBJ CMOS.OBJ MBR.OBJ COMMON.OBJ
+
+EXESPLIT_LIB_FILES=$(LIBPATH)\CC.LIB
+EXESPLIT_OBJ_FILES=$(LIBPATH)\C0C.OBJ .\IO.OBJ .\STARTER.OBJ
+
+DELETE=@DEL
+COPY=@COPY
+ECHO=@ECHO
+PKLITE=@PKLITE
+PKZIP=@PKZIP
+
+TARGET=$(EXE_FILE)
+
+# RULE(S) FOR OBJECT FILE(S)
+.asm.obj:
+	$(ASM) $&.ASM
 
 .c.obj:
-	$(CC)  -o$&.asx $&.c
-	helper -fix_asm $&.asx
-	$(AS) $&.asx
+	$(C) -o$&.ASX $&.c
+	$(HELPER_EXE_FILE) -fix_asm $&.ASX
+	$(ASM) $&.ASX
 
-.asm.obj:
-	$(AS) $&.asm
+.cpp.obj:
+	$(CPP) -o$&.ASX $&.cpp
+	$(HELPER_EXE_FILE) -fix_asm $&.ASX
+	$(ASM) $&.ASX
 
 .cpp.i:
-	cpp32 $&.cpp
+	CPP32 $&.cpp
 
-LNG = cs de fr it nl ru se sp
+# DEFAULT TARGET
+ALL: $(HELPER_EXE_FILE) $(EXESPLIT_EXE_FILE) $(TARGET) $(LNG)
+	$(ECHO).
+	$(ECHO) "$(TARGET)" is up to date!
+	$(ECHO).
 
-EXT_OBJ = ext32.obj ext32cpp.obj ext32lib.obj ext32mem.obj
-WIN_OBJ = graph.obj  window.obj  fnt_ibm.obj  fnt_tiny.obj
-TEST_OBJ = test.obj
-BOOT_OBJ = boot.obj boot2.obj part_aux.obj part_bmg.obj part_tab.obj \
-           part_vtc.obj part_msg.obj ipl.obj
-PART_OBJ = ipl.obj boot_f1x.obj bmboot.obj \
-       part.obj part_aux.obj part_bmg.obj part_cmd.obj part_dsk.obj \
-		part_fat.obj part_gui.obj part_msg.obj part_tab.obj \
-		part_vtc.obj part_wiz.obj part_zip.obj
-ADDON_OBJ = GUI.OBJ CMOS.OBJ MBR.OBJ COMMON.OBJ
-PCMD_OBJ = part_cmd.obj ipl.obj boot_f1x.obj \
-           part_aux.obj part_dsk.obj part_fat.obj part_tab.obj
+	$(DELETE) SOURCES.ZIP
+	$(PKZIP) -ex SOURCES.ZIP MAKEFILE *.ASM *.C *.CFG *.CPP *.H *.INC *.MSG
+	$(DELETE) RELEASE.ZIP
+	$(PKZIP) -ex RELEASE.ZIP PART*.EXE XR*.XXF
 
-en:   helper.exe part.exe
-all:  helper.exe en $(LNG)
-boot: helper.exe boot.exe
-part: helper.exe part.exe
-test: helper.exe test.exe
+# SPECIAL FILE TARGET(S)
+$(PART_OBJ):: EXT32.H PART.H PART_MEN.H PART_VTC.H DISK_SIM.H
 
-ext32.obj: ext32.asm ext32con.inc ext32dsk.inc ext32dos.inc ext32msc.inc \
-                     ext32a20.inc ext32dpm.inc ext32raw.inc ext32xms.inc \
-                     ext32vid.inc
-
-$(PART_OBJ):: ext32.h part.h part_msg.h part_vtc.h disk_sim.h
 $(ADDON_OBJ):: CMOS.H GUI.H MBR.H COMMON.H
 
-part_dsk.obj:: disk_sim.inc
+EXT32.OBJ: EXT32.ASM EXT32CON.INC EXT32DSK.INC EXT32DOS.INC EXT32MSC.INC EXT32A20.INC EXT32DPM.INC EXT32RAW.INC EXT32XMS.INC EXT32VID.INC
 
-boot.exe: $(EXT_OBJ) $(WIN_OBJ) $(BOOT_OBJ)
-	$(LD) @&&!
-	  $(EXT_OBJ) $(WIN_OBJ) $(BOOT_OBJ)
-	  boot.exe
+PART_DSK.OBJ:: DISK_SIM.INC
+
+# $(LNG) == CS
+PART_MCS.H PART_MCS.C: PART_MCS.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MCS.MSG CS PART_MCS.C PART_MCS.H
+	$(CPP) -oPART_MCS.ASX PART_MCS.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MCS.ASX
+	$(ASM) PART_MCS.ASX
+	-$(DELETE) PART_MCS.H
+
+# $(LNG) == DE
+PART_MDE.H PART_MDE.C: PART_MDE.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MDE.MSG DE PART_MDE.C PART_MDE.H
+	$(CPP) -oPART_MDE.ASX PART_MDE.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MDE.ASX
+	$(ASM) PART_MDE.ASX
+	-$(DELETE) PART_MDE.H
+
+# $(LNG) == EN
+PART_MEN.H PART_MEN.C: PART_MEN.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MEN.MSG EN PART_MEN.C PART_MEN.H
+	$(CPP) -oPART_MEN.ASX PART_MEN.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MEN.ASX
+	$(ASM) PART_MEN.ASX
+
+# $(LNG) == ES
+PART_MES.H PART_MES.C: PART_MES.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MES.MSG ES PART_MES.C PART_MES.H
+	$(CPP) -oPART_MES.ASX PART_MES.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MES.ASX
+	$(ASM) PART_MES.ASX
+	-$(DELETE) PART_MES.H
+
+# $(LNG) == FR
+PART_MFR.H PART_MFR.C: PART_MFR.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MFR.MSG FR PART_MFR.C PART_MFR.H
+	$(CPP) -oPART_MFR.ASX PART_MFR.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MFR.ASX
+	$(ASM) PART_MFR.ASX
+	-$(DELETE) PART_MFR.H
+
+# $(LNG) == IT
+PART_MIT.H PART_MIT.C: PART_MIT.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MIT.MSG IT PART_MIT.C PART_MIT.H
+	$(CPP) -oPART_MIT.ASX PART_MIT.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MIT.ASX
+	$(ASM) PART_MIT.ASX
+	-$(DELETE) PART_MIT.H
+
+# $(LNG) == NL
+PART_MNL.H PART_MNL.C: PART_MNL.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MNL.MSG IT PART_MNL.C PART_MNL.H
+	$(CPP) -oPART_MNL.ASX PART_MNL.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MNL.ASX
+	$(ASM) PART_MNL.ASX
+	-$(DELETE) PART_MNL.H
+
+# $(LNG) == RU
+PART_MRU.H PART_MRU.C: PART_MRU.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MRU.MSG RU PART_MRU.C PART_MRU.H
+	$(CPP) -oPART_MRU.ASX PART_MRU.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MRU.ASX
+	$(ASM) PART_MRU.ASX
+	-$(DELETE) PART_MRU.H
+
+# $(LNG) == NL
+PART_MSV.H PART_MSV.C: PART_MSV.MSG
+	$(HELPER_EXE_FILE) -exp_msg PART_MSV.MSG NL PART_MSV.C PART_MSV.H
+	$(CPP) -oPART_MSV.ASX PART_MSV.C
+	$(HELPER_EXE_FILE) -fix_asm PART_MSV.ASX
+	$(ASM) PART_MSV.ASX
+	-$(DELETE) PART_MSV.H
+
+# OUTPUT TARGET(S)
+$(TARGET): $(EXT_OBJ) $(PART_OBJ) $(OBJ_FILE) $(ADDON_OBJ)
+	$(LINK) @&&!
+	  $(EXT_OBJ) $(PART_OBJ) PART_MEN.OBJ $(OBJ_FILE) $(ADDON_OBJ)
+	  $(EXE_FILE)
+	  $(MAP_FILE)
 !
-	helper -fix_exe boot.exe
+	$(HELPER_EXE_FILE) -fix_exe $(EXE_FILE)
+	$(COPY) $(EXE_FILE) $(ORG_FILE)
+	$(EXESPLIT_EXE_FILE) $(EXE_FILE) XRPART00.XXF
+	$(PKLITE) $(EXESPLIT_EXE_FILE)
 
-part.exe: $(EXT_OBJ) $(PART_OBJ) $(ADDON_OBJ)
-	$(LD) @&&!
-	  $(EXT_OBJ) $(PART_OBJ) $(ADDON_OBJ)
-	  part.exe
+$(HELPER_EXE_FILE):
+	$(HELPER_C) $(HELPER_SRC_FILE)
+	-$(DELETE) $(HELPER_OBJ_FILE)
+	$(COPY) $(HELPER_EXE_FILE) $(HELPER_ORG_FILE)
+	$(PKLITE) $(HELPER_EXE_FILE)
+
+$(EXESPLIT_EXE_FILE): $(EXESPLIT_OBJ_FILES)
+	$(EXESPLIT_C) $(EXESPLIT_SRC_FILE)
+	$(LINK) @&&!
+		$(EXESPLIT_OBJ_FILES) $(EXESPLIT_OBJ_FILE), $(EXESPLIT_EXE_FILE), $(EXESPLIT_MAP_FILE), $(EXESPLIT_LIB_FILES)
 !
-	helper -fix_exe part.exe
-	.\exesplit\split.exe
+	-$(DELETE) $(EXESPLIT_OBJ_FILE)
+	$(COPY) $(EXESPLIT_EXE_FILE) $(EXESPLIT_ORG_FILE)
+	$(PKLITE) $(EXESPLIT_EXE_FILE)
 
-part_cmd.exe: $(EXT_OBJ) $(PCMD_OBJ)
-	$(LD) @&&!
-	  $(EXT_OBJ) $(PCMD_OBJ)
-	  part_cmd.exe
+$(LNG): $(EXT_OBJ) $(PART_OBJ) $(ADDON_OBJ)
+	$(CPP) -oPART-$@.ASX PART.CPP
+	$(HELPER_EXE_FILE) -fix_asm PART-$@.ASX
+	$(ASM) PART-$@.ASX
+
+	$(HELPER_EXE_FILE) -exp_msg PART_M$@.MSG $@ PART_M$@.C PART_M$@.H
+	$(CPP) -oPART_M$@.ASX PART_M$@.C
+	$(HELPER_EXE_FILE) -fix_asm PART_M$@.ASX
+	$(ASM) PART_M$@.ASX
+	-$(DELETE) PART_M$@.H
+	$(LINK) @&&!
+	   $(EXT_OBJ) $(PART_OBJ) PART_M$@.OBJ PART-$@.OBJ $(ADDON_OBJ)
+	   PART-$@.EXE
+	   PART-$@.MAP
 !
-	helper -fix_exe part_cmd.exe
+	$(HELPER_EXE_FILE) -fix_exe PART-$@.EXE
+	$(COPY) PART-$@.EXE PART-$@.ORG
+	$(EXESPLIT_EXE_FILE) PART-$@.EXE XRPT$@00.XXF
+	$(PKLITE) PART-$@.EXE
 
-test.exe:     $(EXT_OBJ) $(WIN_OBJ) $(TEST_OBJ)
-	$(LD) @&&!
-	  $(EXT_OBJ) $(WIN_OBJ) $(TEST_OBJ)
-	  test.exe
-!
-	helper -fix_exe  test.exe
-
-part_msg.h part_msg.c: part_msg.msg
-	helper -exp_msg en part_msg.c part_msg.h
-	$(CC) -opart_msg.asx part_msg.c
-	helper -fix_asm part_msg.asx
-	$(AS) part_msg.asx
-
-$(LNG):	$(EXT_OBJ) $(WIN_OBJ) $(PART_OBJ) $(ADDON_OBJ)
-	helper -exp_msg $@ part_msg.c part_msg.h
-	$(CC) -opart_msg.asx part_msg.c
-	helper -fix_asm  part_msg.asx
-	$(AS) part_msg.asx
-	$(LD) @&&!
-	   $(EXT_OBJ) $(WIN_OBJ) $(PART_OBJ)
-	   part-$@.exe
-!
-	del part_msg.obj
-
-helper.exe: helper.c
-	bcc32 helper.c
-	del helper.obj
-
-zip: en
-	copy part.exe part.org
-	pklite part.exe
-	pkzip -ex sources.zip makefile *.bat *.asm *.inc *.c* *.h *.msg *.txt
-	pkzip -ex release.zip part*.exe part*.org
-
-clean:
-	@clean.bat
+# CLEAN TARGET
+CLEAN:
+	-$(DELETE) *.@@@
+	-$(DELETE) *.ASX
+	-$(DELETE) *.EXE
+	-$(DELETE) *.LST
+	-$(DELETE) *.MAP
+	-$(DELETE) *.OBJ
+	-$(DELETE) *.ORG
+	-$(DELETE) *.TMP
+	-$(DELETE) *.XXF
+	-$(DELETE) *.ZIP
+	-$(DELETE) TURBOC.*
+	-$(DELETE) PART_MCS.C
+	-$(DELETE) PART_MCS.H
+	-$(DELETE) PART_MDE.C
+	-$(DELETE) PART_MDE.H
+	-$(DELETE) PART_MEN.C
+	-$(DELETE) PART_MEN.H
+	-$(DELETE) PART_MES.C
+	-$(DELETE) PART_MES.H
+	-$(DELETE) PART_MFR.C
+	-$(DELETE) PART_MFR.H
+	-$(DELETE) PART_MIT.C
+	-$(DELETE) PART_MIT.H
+	-$(DELETE) PART_MNL.C
+	-$(DELETE) PART_MNL.H
+	-$(DELETE) PART_MRU.C
+	-$(DELETE) PART_MRU.H
+	-$(DELETE) PART_MSV.C
+	-$(DELETE) PART_MSV.H

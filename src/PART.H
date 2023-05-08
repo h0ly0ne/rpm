@@ -1,10 +1,10 @@
 #ifndef PART_H
 #define PART_H
 
-#include "ext32.h"
-#include "part_vtc.h"
-#include "part_msg.h"
 #include <stddef.h>
+#include "EXT32.H"
+#include "PART_VTC.H"
+#include "PART_MEN.H"
 #include "COMMON.H"
 
 #define MT4P /* 
@@ -430,7 +430,7 @@ void part_new_wiz( DiskInfo *, int *row );
 
 void zip_example( HardDiskInfo *, Part * );
 
-/* vtoc.cpp */
+/* part_vtc.cpp */
 
 void import_vtoc(DiskInfo *, Vtoc *);
 void export_vtoc(DiskInfo *, Vtoc *);

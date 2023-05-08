@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v2.47] - 2023-05-08
+
+### Changes [RPM]
+
+* Integrated/Borrowed XOSL EXESPLIT routine for generation of XXF files
+* Extended EXESPLIT to contain size of last part and number of parts in header
+* Adopted HELPER to specify source translation file
+* Splitted translation file to multiple translation files (to get codepage per file correct)
+* Added/Reintegrated translation for PART_CMD
+* Completed german translation
+* Removed unused translation terms for all languages
+* Increased version to reflect the major changes
+
+### Changes [BuildEnvironment]
+
+* Updated Powershell Building/Cleaning
+* Removed unused files (C, ASM, BAT)
+* Reimplemented MAKEFILE to enable the buildung of all language translations
+* Removed unused / only partially available targets in MAKEFILE
+* Added automatic binary compression of all build targets including packaging in zip files for release
+* Updated Borland build tools (non version change) and add documentation
+* Updated most filenames and translation selectors to uppercase
+* Updated .gitignore to reflect all changes
+* Updated documentation
+
 ## [v2.46] - 2023-05-01
 
 ### Changes [RPM]

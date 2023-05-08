@@ -10,10 +10,10 @@
                 .model  compact
                 .386p
                 .code
-                public  _creat, _open, _close, _read, _write, _chmod, _getSize
+                public  _create, _open, _close, _read, _write, _chmod, _getSize
 
-;int creat(const char *path);
-_creat          proc
+;int create(const char *path);
+_create         proc
                 push    bp
                 mov     bp,sp
                 push    ds
@@ -21,12 +21,12 @@ _creat          proc
                 xor     cx,cx
                 lds     dx,[bp + 4]
                 int     21h
-                jnc     CreatOk
+                jnc     CreateOk
                 mov     ax,-1
-CreatOk:        pop     ds
+CreateOk:       pop     ds
                 pop     bp
                 ret
-_creat          endp
+_create         endp
 
 ;int open(const char *path, int access);
 _open           proc
@@ -60,33 +60,25 @@ _close          endp
 _getSize        proc
                 push    bp
                 mov     bp,sp
-
                 mov     ax,4202h
                 mov     bx,[bp + 4]
                 xor     cx, cx
                 xor     dx, dx
-
                 int     21h
                 jc      getSizeKO
-
                 push    dx
                 push    ax
-
                 mov     ax,4200h
                 mov     bx,[bp + 4]
                 xor     cx, cx
                 xor     dx, dx
-
                 int     21h
                 pop     ax
                 pop     dx
                 jnc     getSizeOK
-
-
 getSizeKO:      
                 xor     ax, ax
                 xor     dx, dx
-
 getSizeOK:
                 pop     bp
                 ret
@@ -104,7 +96,7 @@ _read           proc
                 int     21h
                 jnc     ReadOK
                 xor     ax,ax
-ReadOk:         pop     ds
+ReadOK:         pop     ds
                 pop     bp
                 ret
 _read           endp
@@ -121,7 +113,7 @@ _write          proc
                 int     21h
                 jnc     WriteOK
                 xor     ax,ax
-WriteOk:        pop     ds
+WriteOK:        pop     ds
                 pop     bp
                 ret
 _write          endp

@@ -96,7 +96,7 @@ Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSS
 Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.exe | ForEach-Object { Remove-Item -Path $_.FullName }
 Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.org | ForEach-Object { Remove-Item -Path $_.FullName }
 Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.log | ForEach-Object { Remove-Item -Path $_.FullName }
-Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) xrpart*.xxf | ForEach-Object { Remove-Item -Path $_.FullName }
+Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build'))) *.xxf | ForEach-Object { Remove-Item -Path $_.FullName }
 $file_buildlog = [IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\build.log');
 if(Test-path $file_buildlog) { Remove-Item $file_buildlog; }
 New-Item $file_buildlog | Out-Null;
@@ -105,7 +105,7 @@ New-Item $file_buildlog | Out-Null;
 # Starting build process #
 ##########################
 Write-Host "- Starting build process";
-$process_dosboxx = Start-Process -NoNewWindow -WorkingDirectory $(Get-Item $PSScriptRoot) -FilePath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x\dosbox-x.exe')) -ArgumentList "-conf",$([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x.conf')),"-fastlaunch","-log-con","-silent","-c ""T:\BUILD.BAT""" -PassThru;
+$process_dosboxx = Start-Process -NoNewWindow -WorkingDirectory $(Get-Item $PSScriptRoot) -FilePath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x\dosbox-x.exe')) -ArgumentList "-conf",$([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x.conf')),"-fastlaunch","-log-con","-silent","-c ""S:""","-c ""MAKE""" -PassThru;
 $process_dosboxx_instances = 1;
 
 try {
@@ -140,11 +140,12 @@ finally
 	# Releasing files #
 	###################
 	Write-Host "- Releasing files";
-	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\part.exe')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
-	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\part.org')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
-	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\xrpart*.xxf')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
-	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\sources.zip')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
-	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\release.zip')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
+	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\PART.EXE')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
+	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\XRPART*.XXF')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
+    Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\PART-*.EXE')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
+    Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\XRPT*.XXF')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
+	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\SOURCES.ZIP')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
+	Move-Item -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'src') + '\RELEASE.ZIP')) -Destination $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\')) -Force -ErrorAction SilentlyContinue;
 
 	#########################
 	# Cleaning up processes #

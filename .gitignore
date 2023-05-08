@@ -8,9 +8,19 @@
 *.[Mm][Aa][Pp]
 *.[Oo][Bb][Jj]
 *.[Oo][Rr][Gg]
+*.[Xx][Xx][Ff]
 *.[Zz][Ii][Pp]
+*.[@@][@@}[@@]
 
-[Pp][Aa][Rr][Tt]_[Mm][Ss][Gg].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Cc][Ss].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Dd][Ee].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Ee][Nn].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Ee][Ss].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Ff][Rr].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Ii][Tt].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Nn][Ll].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Rr][Uu].[CcHh]
+[Pp][Aa][Rr][Tt]_[Mm][Ss][Vv].[CcHh]
 
 /.vs/**
 /.vscode/**

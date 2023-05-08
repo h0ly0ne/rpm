@@ -2,13 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define MAX_MSGS 300
 #define BUF_SIZE 4096
 
 #define TEMP_FILE        "helper.tmp"
-#define MESG_FILE        "part_msg.msg"
-#define BACKUP_MESG_FILE "part_msg.mbk"
 
 int num_msgs;
 char *msg_name[MAX_MSGS];
@@ -22,8 +19,8 @@ char buf3[BUF_SIZE];
 
 void fix_asm(char *file_name);
 void fix_exe(char *file_name);
-void imp_msg(char *language, char *file_name);
-void exp_msg(char *language, char *file_name, char *file_name2);
+void imp_msg(char *mesg_file, char *language, char *file_name);
+void exp_msg(char *mesg_file, char *language, char *file_name, char *file_name2);
 
 
 void read_msgs(FILE *f, char *lang, FILE *dmp_c, FILE *dmp_h);
@@ -39,13 +36,12 @@ void error(char *msg)
 
 void usage(void)
 {
- fprintf(stderr,"Usage: helper -fix_asm  file.asm\n"
-                "   or  helper -fix_exe  file.exe\n"
-                "   or  helper -imp_msg  language import_file\n"
-                "   or  helper -exp_msg  language export_file.c export_file.h\n");
+ fprintf(stderr,"Usage: helper -fix_asm file.asm\n"
+                "   or  helper -fix_exe file.exe\n"
+                "   or  helper -imp_msg messagefile language import_file\n"
+                "   or  helper -exp_msg messagefile language export_file.c export_file.h\n");
  exit(1);
 }
-
 
 void *m_malloc(int n)
 {
@@ -60,8 +56,8 @@ void main(int argc, char **argv)
 {
       if( argc==3 && strcmp(argv[1],"-fix_asm")==0 ) fix_asm(argv[2]);
  else if( argc==3 && strcmp(argv[1],"-fix_exe")==0 ) fix_exe(argv[2]);
- else if( argc==4 && strcmp(argv[1],"-imp_msg")==0 ) imp_msg(argv[2],argv[3]);
- else if( argc==5 && strcmp(argv[1],"-exp_msg")==0 ) exp_msg(argv[2],argv[3],argv[4]);
+ else if( argc==5 && strcmp(argv[1],"-imp_msg")==0 ) imp_msg(argv[2],argv[3],argv[4]);
+ else if( argc==6 && strcmp(argv[1],"-exp_msg")==0 ) exp_msg(argv[2],argv[3],argv[4],argv[5]);
  else usage();
  exit(0);
 }
@@ -159,11 +155,11 @@ void fix_exe(char *file_name)
 /* ------------------------------------------------------------------------ */
 
 
-void imp_msg(char *language, char *file_name)
+void imp_msg(char *mesg_file, char *language, char *file_name)
 {
  FILE *mf, *f, *tf;
 
- if( (mf=fopen(MESG_FILE,"r"))==0 )
+ if( (mf=fopen(mesg_file,"r"))==0 )
    error("Error opening master_message_file file");
 
  if( (f=fopen(file_name,"r"))==0 )
@@ -178,19 +174,15 @@ void imp_msg(char *language, char *file_name)
  fclose(mf);
  fclose(f);
  fclose(tf);
-/* remove(BACKUP_MESG_FILE); 
- rename(MESG_FILE,BACKUP_MESG_FILE);
- rename(TEMP_FILE,MESG_FILE);
- */
 }
 
 /* ------------------------------------------------------------------------ */
 
-void exp_msg(char *language, char *file_name_c, char *file_name_h)
+void exp_msg(char *mesg_file, char *language, char *file_name_c, char *file_name_h)
 {
  FILE *mf, *c, *h;
 
- if( (mf=fopen(MESG_FILE,"r"))==0 )
+ if( (mf=fopen(mesg_file,"r"))==0 )
    error("Error opening master_message_file file");
 
  if( (c=fopen(file_name_c,"w"))==0 )
@@ -248,7 +240,7 @@ void read_msgs(FILE *f, char *lang, FILE *dmp_c, FILE *dmp_h)
        }
      else if( p[0]=='[' && p[3]==']' )  /* message body in a new language */
        {
-        if( p[1]=='e' && p[2]=='n' && !msg_in_buf ||
+        if( p[1]=='E' && p[2]=='N' && !msg_in_buf ||
             p[1]==lang[0] && p[2]==lang[1] ) 
           {
            msg_in_buf=1;

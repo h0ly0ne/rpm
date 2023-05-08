@@ -1,0 +1,506 @@
+#
+# PART_MDE.MSG
+# CODEPAGE: OEM-850
+#
+
+# If you think that some messages don't need to be translated,
+# just skip them, and english version will be used by default.
+
+#define PROGRAM "Ranish Partition Manager"
+#define VERSION "2.47  "
+#define HOME_URL "https://github.com/binary-manu/rpm"
+#define BINARY "PART-DE.EXE"
+
+PROGRAM_TITLE
+
+[EN]PROGRAM "       Version " VERSION HOME_URL "\r\n"
+[DE]PROGRAM "       Version " VERSION HOME_URL "\r\n"
+
+MESG_GETTING
+
+[EN]"Getting hard disk parameters ..."
+[DE]"Ermittle Plattenparameter ..."
+
+MESG_READING
+
+[EN]"Reading partition table ..."
+[DE]"Einlesen der Partitionstabelle ..."
+
+ERROR_DISK_INFO 
+
+[EN]"Error getting hard disk parameters."
+[DE]"Fehler beim Zugiff auf Festplatte."
+
+HEADER_DISK
+
+[EN]"Hard Disk  .     ... Mbytes [  .... cylinders  x ... heads  x .. sectors ]"
+[DE]"Festplatte .     ... Mbytes [  .... Zylinder   x ... Kîpfe  x .. Sektoren]"
+
+HEADER_CHS
+
+[EN]
+"                File                Starting         Ending      Partition\r\n"
+"# Type Row   System Type         Cyl Head Sect    Cyl Head Sect  Size [KB]"
+[DE]
+"               Datei-               Start             Ende      Partitions\r\n"
+"# Typ Reihe  system Typ          Zyl Kopf Sekt    Zyl Kopf Sekt  Grî·e[KB]"
+
+HEADER_LBA
+
+[EN]
+"                File             Starting  Number of     Ending  Partition\r\n"
+"# Type Row   System Type           sector    sectors     sector  Size [KB]"
+[DE]
+"               Datei-             Start    Anzahl der    Ende   Partitions\r\n"
+"# Typ Reihe   system Typ          Sektor    Sektoren    Sektor   Grî·e[KB]"
+
+HEADER_EXT
+
+[EN]"#  File System Type       Cyl Head Sect    Cyl Head Sect"
+[DE]"#  Dateisystem Typ        Zyl Kopf Sekt    Zyl Kopf Sekt"
+
+HEADER_MINI
+
+[EN]"# Partition   Size"
+[DE]"# Partition  Grî·e"
+
+USING_CHS
+
+[EN]"Using CHS"
+[DE]"Benutze CHS"
+
+USING_LBA
+
+[EN]"Using LBA"
+[DE]"Benutze LBA"
+
+PROBLEMS
+
+[EN]"Problems"
+[DE]"Probleme"
+
+HELP
+
+[EN]" Help "
+[DE]"Hilfe "
+
+HINT_MBR
+
+[EN]"ENTER - Edit options    S - Save MBR to file   L - Load MBR from file"
+[DE]"ENTER - Einstellungen   S - MBR speichern      L - MBR laden"
+
+HINT_WIZ
+
+[EN]"ENTER - Start wizard    INS - select file system   DEL - clear record" 
+[EN]"ENTER - Assistent       INS - Dateisystemauswahl   DEL - Lîschen" 
+
+HINT_INS
+
+[EN]"B - Boot flag on/off    INS - select file system   DEL - clear record"
+[DE]"B - Bootmarker AN/AUS   INS - Dateisystemauswahl   DEL - Lîschen"
+
+HINT_ROW
+
+[EN]"1-4 - in which row in MBR to put this partition (space - don't care)"
+[DE]"1-4 - Position im MBR zur Anlage der Partition (Platz ist irrelevant)"
+
+HINT_CHS 
+
+[EN]"Use: +,-,0-9,BkSp      Cyl=0..%,d  Head=0..%d  Sect=1..%d"
+[DE]"Benutze: +,-,0-9,BkSp  Zyl=0..%,d  Kopf=0..%d  Sekt=1..%d"
+
+HINT_LBA 
+
+[EN]"Use: +,-,0-9,BkSp      Starting=0..%,d  Sectors=1..%,d"
+[DE]"Benutze: +,-,0-9,BkSp  Beginn=0..%,d    Sektoren=1..%,d"
+
+ERR_PROBLEMS
+
+[EN]" Problems with partition "
+[DE]" Problem(e) mit Partition "
+
+ERR_ZERO
+
+[EN]"Partition size may not be zero"
+[DE]"Partitionsgrî·e muss grî·er 0 sein"
+
+ERR_RANGE
+
+[EN]"Partition addresses are out of range"
+[DE]"Partitionsposition im ungÅltigen Bereich"
+
+ERR_OVERLAP 
+
+[EN]"Partition overlaps another partition"
+[DE]"Partitionen Åberlappen einander"
+
+ERR_LOG_ORPH
+
+[EN]"Partition is outside of extended partition"
+[DE]"Partition au·erhalb der erweiterten Partition"
+
+ERR_LOG_STRU
+
+[EN]"Invalid layout of extended partition chain"
+[DE]"UngÅltiges Layout der erweiterten Partitionskette"
+
+ERR_CANT_READ
+
+[EN]"Error reading boot sector from the disk"
+[DE]"Fehler beim Lesen des Boot-Sektors"
+
+ERR_BOOT_SECT
+
+[EN]"Boot sector doesn't have valid information"
+[DE]"Boot-Sektor enthÑlt ungÅltige Daten"
+
+HEADER_SYSTYPE 
+
+[EN]"  ID     File System Type       Supported  "
+[DE]"  ID     Dateisystem Typ       UnterstÅtzt "
+
+HINT_INSFSID
+
+[EN]" INS - select unlisted file system "
+[DE]" INS - undefiniertes Dateisystem auswÑhlen "
+
+PROMPT_FSID 
+
+[EN]"Enter two digit hex number: "
+[DE]"Dateisystem ID: "
+
+MESG_UNSUPPORTED
+
+[EN]
+"This is unsupported file system.\n"
+"No additional details are available."
+[DE]
+"Nicht unterstÅtztes Dateisystem.\n"
+"Keine zusÑtzlichen Informationen verfÅgbar."
+
+MESG_WIZARD
+
+[EN]
+"Press ENTER to start Partitioning Wizard,\n"
+"which will guide you through the creation\n"
+"of new partitions."
+[DE]
+"DrÅcke ENTER zum starten des Partitions-\n"
+"assistenten um durch die Anlage neuer\n"
+"Partition gefÅhrt zu werden."
+
+ERROR_MALLOC 
+
+[EN]"Cannot allocate more memory."
+[DE]"Nicht genÅgend Speicher."
+
+ERROR_READ_PART_TABLE 
+
+[EN]"Error reading MBR or EMBR from disk."
+[DE]"Fehler beim Lesen des MBR oder EMBR."
+
+ERROR_SAVE_PART_TABLE
+
+[EN]"Error writing MBR or EMBR to disk."
+[DE]"Fehler beim Schreiben des MBR oder EMBR."
+
+ERROR_READ_FILE 
+
+[EN]"Error reading from file."
+[DE]"Fehler beim Lesen der Datei."
+
+ERROR_SAVE_FILE 
+
+[EN]"Error writing to file."
+[DE]"Fehler beim Schreiben in Datei."
+
+MESG_PART_TABLE_SAVED
+
+[EN]"Partition table was saved to hard disk."
+[DE]"Partitionstabelle wurde geschrieben."
+
+#MESG_DIFFERENT 
+
+#[EN]"Differences found !!!"
+#[DE]"Unterschiede gefunden !!!"
+
+#MESG_NO_DIFFERENCES 
+
+#[EN]"No differences found."
+#[DE]"Keine Unterschiede gefunden."
+
+#PROMPT_FILE 
+
+#[EN]"Enter file name: "
+#[DE]"Dateiname: "
+
+#PROMPT_FORMAT 
+
+#[EN]"Optional format arguments: "
+#[DE]"Optionale Formatparameter: "
+
+MESG_COPYING 
+
+[EN]"^Copying...                                          Press ESC to cancel"
+[DE]"^Kopieren...                                           Abbrechen mit ESC"
+
+MESG_CLEANING 
+
+[EN]"^Cleaning...                                         Press ESC to cancel"
+[DE]"^RÑume auf...                                          Abbrechen mit ESC"
+
+MESG_VERIFYING 
+
+[EN]"^Verifying...                                        Press ESC to cancel"
+[DE]"^Verifiziere...                                        Abbrechen mit ESC"
+
+MESG_FORMATTING 
+
+[EN]"^Formatting...                                       Press ESC to cancel"
+[DE]"^Formatiere...                                         Abbrechen mit ESC"
+
+MESG_FORMAT_OK 
+
+[EN]"Format completed."
+[DE]"Formatieren beendet."
+
+WARN_FORMAT_CANCEL 
+
+[EN]"Format canceled by user."
+[DE]"Formatierung abgebrochen."
+
+ERROR_FORMAT_FAILED 
+
+[EN]"Format failed."
+[DE]"Formatierung fehlgeschlagen."
+
+MESG_VERIFY_OK 
+
+[EN]"Verification completed. No bad sectors found."
+[DE]"OberflÑchentest beendet. Keine Fehler gefunden."
+
+WARN_VERIFY_CANCEL 
+
+[EN]"Verification canceled by user."
+[DE]"OberflÑchentest abgebrochen."
+
+IPL_HINT_SPACE
+
+[EN]
+"   Use Space to cycle\n"
+"   through the values\n\n"
+"Press Enter when done\n"
+ #ifdef DISK_SIM
+ "Press F10 to simulate"
+ #endif
+""
+[DE]
+"   DrÅcke LEERTASTE um durch\n"
+"   die Werte zu blÑttern\n\n"
+"DrÅcke ENTER um abzuschlie·en\n"
+ #ifdef DISK_SIM
+ "DrÅcke F10 fÅr Simulation"
+ #endif
+""
+
+IPL_OPTION1
+
+[EN]
+#"Initial Program Loader:"
+#"Enable 100+ partitions:"
+#"Check for boot viruses:"
+#"Boot manager's timeout:"
+#"Default boot selection:"
+"MBR Executable code:"
+[DE]
+#"Initialer Programmstart:"
+#"Aktiviere 100+ Partitionen:"
+#"Boot-Sektor-Viren prÅfen:"
+#"Boot-Manager Timeout:"
+#"Standard Boot Auswahl:"
+"MBR ausfÅhrbarer Code:"
+
+IPL_OPTIONS
+
+[EN]
+"Boot interface type:\n"
+#"Boot manager option:\n"
+"Check for viruses:  \n"
+"Boot prompt timeout:\n"
+"Default boot choice:"
+[DE]
+"Boot-OberflÑchen-Typ:\n"
+#"Boot-Manager Optionen:\n"
+"Auf Viren prÅfen:  \n"
+"Bootanzeige Timeout:\n"
+"Standard Boot Auswahl:"
+
+MENU_ADV_OPT_TITLE 
+
+[EN]"Menu title:"
+[DE]"MenÅ Titel:"
+
+MENU_ADV_OPT_TIMEOUT 
+
+[EN]"Boot menu timeout:"
+[DE]"Boot MenÅ Timeout:"
+
+MENU_ADV_OPT_VIRCHECK 
+
+[EN]"Check for viruses:"
+[DE]"Auf Viren prÅfen:"
+
+MENU_ADV_OPT_CLEARSCR 
+
+[EN]"Clear screen:"
+[DE]"Bildschirm lîschen:"
+
+MENU_ADV_OPT_DEFAULT 
+
+[EN]"Default boot menu:"
+[DE]"Standard Boot MenÅ:"
+
+MENU_ADV_OPT_PASSWORD 
+
+[EN]"Menu password:"
+[DE]"MenÅ Passwort:"
+
+FS_NAME_UNUSED     # No more than 10 characters 
+
+[EN]"Unused"
+[DE]"Unbenutzt"
+
+FS_NAME_HIDDEN     # No more than 10 characters 
+
+[EN]"Hidden"
+[DE]"Versteckt"
+
+FS_NAME_UNKNOWN    # No more than 10 characters 
+
+[EN]"Unknown"
+[DE]"Unbekannt"
+
+EXT_NOT_BOOTABLE
+
+[EN]"\r\nExtended partition is not bootable."
+    "\r\nHit a key to reboot..."
+[DE]"\r\nErweiterte Partition ist nicht startbar."
+    "\r\nDrÅcke Taste um das System neu zu starten..."
+
+MESG_NON_SYSTEM
+
+[EN]"\r\nSystem is not installed."
+    "\r\nHit a key to reboot..."
+[DE]"\r\nKein System installiert."
+    "\r\nDrÅcke Taste um das System neu zu starten..."
+
+MAIN_BORDER     # Don't "translate" these, unless your code page requires
+
+[EN]"…Õª∫ ∫»Õº"
+
+VERT_BORDER
+
+[EN]"∫ ∫∫ ∫∫ ∫"
+
+HORIZONTAL
+
+[EN]" ƒ "
+
+STEP_BORDER
+
+[EN]"…Õ—∫ ≥»Õœ"
+
+BOX1_BORDER
+
+[EN]"«ƒ∂∫ ∫»Õº"
+
+BOX2_BORDER
+
+[EN]"¬ƒ∂≥ ∫œÕº"
+
+SINGLE_BORDER
+
+[EN]"⁄ƒø≥ ≥¿ƒŸ"
+
+PART_TYPE_PRI
+
+[EN]"Pri %c"
+
+PART_TYPE_EXT
+
+[EN]"∆ Ext"
+
+PART_TYPE_LOG
+
+[EN]"√ Log"
+
+GUI_HELP_TEXT
+
+[EN]
+"HELP\n\n"
+"A - Make floppy disk that boots " BINARY "\n"
+"B - Toggle boot flag\n"
+"C - Copy partition\n"
+"D - Copy entire disk\n"
+"E - Erase partition\n"
+"F - Format FAT-16 / FAT-32 partition\n"
+"H - Hide/unhide partition\n"
+"V - Verify partition's surface\n"
+"L - Load/save MBR from/to file\n"
+"S - Alias for L\n"
+"M - Load/save CMOS setting from/to file\n\n"
+"Run \"part -help\" for command line options\n\n"
+"For more information: github.com/binary-manu/rpm\n"
+#"T - Scan disk for lost partitions (not implemented yet)\n\n"
+[DE]
+"HILFE\n\n"
+"A - Erstelle Diskette zum booten von " BINARY "\n"
+"B - Bootmarkierung AN/AUS\n"
+"C - Partition kopieren\n"
+"D - Komplette Festplatte kopieren\n"
+"E - Partition lîschen\n"
+"F - Format FAT-16 / FAT-32 Partition\n"
+"H - Partition Verstecken/Anzeigen\n"
+"V - Partition OberflÑchentest\n"
+"L - Lade/Speichere MBR von/in Datei\n"
+"S - Alternative fÅr L\n"
+"M - Lade/Speichere CMOS Einstellungen von/in Datei\n\n"
+"Starte \"part -help\" for Kommando-Zeilen-Parameter\n\n"
+"FÅr zusÑtzliche Informationen besuche: github.com/binary-manu/rpm\n"
+#"T - Untersuche Festplatte nach verlorenen Partitionen (noch nicht implementiert)\n\n"
+
+CMD_HELP_TEXT
+
+[EN]
+"Usage: " BINARY " [DISK] [/<COMMAND>|/B:FILE [/Q|/V] [/D] [/Y]]\r\n"
+"\r\nParameters:\r\n"
+#ifndef DISK_SIM
+"<DISK>                         hard disk number, valid values are 1 to 8\r\n"
+#endif
+"/B:<FILE>                      execute batch file\r\n"
+"/Q /V /D                       quiet/verbose/debug execution mode\r\n"
+"/Y                             sure-mode on execution\r\n\r\n"
+#ifndef DISK_SIM
+"Commands:\r\n"
+"/P or /PRINT                   print disk and partitions info\r\n"
+"/E or /EXTRA                   print extra disk and partitions info\r\n"
+#ifdef SCAN_OPT
+"/S                             scan for disk and partitions\r\n"
+#endif
+"/MBR                           write standard IPL\r\n"
+"/MBS /F:<FILE>                 save MBR to file\r\n"
+"/MBL /F:<FILE>                 load MBR from file\r\n"
+"/CMS /F:<FILE>                 save CMOS to file\r\n"
+"/CML /F:<FILE> [/T:<DATE>]     load CMOS from file by date YY-MM-DD-HH-MM-SS\r\n\r\n"
+"/ACT <PARAMS>                  activate partition\r\n"
+"/CRE <PARAMS>                  create partition\r\n"
+"/FOR <PARAMS>                  format partition\r\n"
+"/DEL <PARAMS>                  delete partition\r\n"
+"\r\nCommands Parameters:\r\n"
+"/ACT /P:<PARTITION-NUMBER> | /PRI[<:NTH>]\r\n"
+"/CRE [/PRI | /EXT | /LOG] [/SZ:<MB>|<PCNT%%>] [/FOR [/V:<LABEL>]]\r\n"
+"     [/NTFAT16 | /FAT16 | /FAT32 | /NTFS]\r\n"
+"/FOR /P:<PARTITION-NUMBER> | /PRI[<:NTH>] | /LOG[<:NTH>] [/V:<LABEL>]\r\n"
+"/DEL /P:<PARTITION-NUMBER> | /PRI[<:NTH>] | /LOG[<:NTH>]\r\n"
+"     [/EXT | /ALL | /NODEL:<PARTITION-CODE>]\r\n\r\n"
+#endif
