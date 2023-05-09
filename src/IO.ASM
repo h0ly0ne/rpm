@@ -21,9 +21,9 @@ _create         proc
                 xor     cx,cx
                 lds     dx,[bp + 4]
                 int     21h
-                jnc     CreateOk
+                jnc     CreateOK
                 mov     ax,-1
-CreateOk:       pop     ds
+CreateOK:       pop     ds
                 pop     bp
                 ret
 _create         endp
@@ -38,9 +38,9 @@ _open           proc
                 lds     dx,[bp + 4]
                 xor     cx,cx
                 int     21h
-                jnc     OpenOk
+                jnc     OpenOK
                 mov     ax,-1
-OpenOk:         pop     ds
+OpenOK:         pop     ds
                 pop     bp
                 ret
 _open           endp
