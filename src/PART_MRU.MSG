@@ -13,8 +13,8 @@
 
 PROGRAM_TITLE
 
-[EN]PROGRAM "       Version " VERSION HOME_URL "\r\n"
-[RU]PROGRAM "        Версия " VERSION HOME_URL "\r\n"
+[EN]PROGRAM "  Version " VERSION HOME_URL
+[RU]PROGRAM "   Версия " VERSION HOME_URL
 
 MESG_GETTING
 

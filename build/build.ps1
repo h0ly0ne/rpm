@@ -7,7 +7,7 @@ Clear-Host;
 # Required download locations for 3rd party components #
 ########################################################
 $ProgressPreference = 'SilentlyContinue' 
-$url_dosboxx = "https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v2023.03.31/dosbox-x-vsbuild-win64-20230401023040.zip";
+$url_dosboxx = "https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v2023.05.01/dosbox-x-vsbuild-win64-20230501152329.zip";
 $url_pkzip = "http://cd.textfiles.com/darkdomain/programs/dos/archivers/pkz204g.exe";
 $url_pklite = "http://cd.textfiles.com/darkdomain/programs/dos/archivers/pklts201.exe";
 $url_unxutils = "https://deac-ams.dl.sourceforge.net/project/unxutils/unxutils/current/UnxUtils.zip";
@@ -152,7 +152,6 @@ finally
 	#########################
 	Write-Host "- Stopping process(es)";
 	try { $process_dosboxx = (Get-Process -inputObject $process_dosboxx -ErrorAction SilentlyContinue); } catch { $process_dosboxx = $null; } finally { if ($null -ne $process_dosboxx) { Stop-Process -inputObject $process_dosboxx; } }
-	try { $process_split = (Get-Process -inputObject $process_split -ErrorAction SilentlyContinue); } catch { $process_split = $null; } finally { if ($null -ne $process_split) { Stop-Process -inputObject $process_split; } }
 }
 
 ####################

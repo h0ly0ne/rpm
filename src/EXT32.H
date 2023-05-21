@@ -11,7 +11,6 @@ extern "C" {
 
 /*--------------  Keyboard and Screen IO  --------------*/
 
-int get_detected_os(void);
 /*
 	0 - no OS
 	1 - MS-DOS <5.00
@@ -20,6 +19,8 @@ int get_detected_os(void);
 	4 - Windows 95/98/...
 	5 - Windows NT
 */
+int get_detected_os(void);
+
 int get_startup_hd(void);    /* when running without OS */
 
 void delay(int);  /* takes time in 1/1000 of the second */

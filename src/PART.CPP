@@ -1,6 +1,6 @@
-#define   PART_C
-#include "part.h"
+#define PART_C
 
+#include "PART.H"
 #include "GUI.H"
 #include "CMOS.H"
 #include "MBR.H"
@@ -8,47 +8,69 @@
 #ifndef DISK_SIM
 void ask_and_install_to_floppy(void)
 {
- if( dialog_box("Installing Partition Manager to a floppy. Insert formatted floppy into A:",
-     " Copy PART.EXE and update boot sector on A: ",
-     " Cancel ", 0 )==1 ) install_to_floppy(); 
+    if(dialog_box("Installing Partition Manager to a floppy. Insert formatted floppy into A:", " Copy PART.EXE and update boot sector on A: ", " Cancel ", 0) == 1)
+        install_to_floppy(); 
 }
 #endif
 
-void main(int argc, char **argv)
+char *ultoa(unsigned long Value, char *Str, int Base)
 {
- int hd=0x80;
+	char InvString[64];
+	char *pStr;
+	char *pOrig = Str;
 
-#ifndef DISK_SIM 
- if( get_detected_os()==5 ) // Windows NT
-   {
-    ask_and_install_to_floppy();
+	pStr = InvString;
+	do {
+		*pStr++ = "0123456789ABCDEF"[Value % Base];
+		Value /= Base;
+	} while (Value);
+
+	while (pStr != InvString) {
+		*Str++ = *--pStr;
+	}
+	*Str = '\0';
+	return pOrig;
+}
+
+void main(int argc, char **argv)
+{/* main */
+    int hd = 0x80;
+    char buffer[64];
+
+    #ifndef DISK_SIM 
+        if(get_detected_os() == 5)
+        { // Windows NT
+            ask_and_install_to_floppy();
+            exit(0);
+        }
+    #endif
+
+    if(argc == 2 && argv[1][0] >= '1' && argv[1][0] <= '8')
+    {
+        hd += argv[1][0] - '1';
+    }
+
+    if(argc >= 2)
+    {
+        start_cmd(hd, argc, argv);
+    }
+    else 
+    {
+        gui_init();
+
+        if(get_detected_os() == 0 && get_startup_hd() != 0 && get_disk_info(get_startup_hd())->bm_type != 0) {
+            hd = get_startup_hd();
+            boot_manager(hd);
+        }
+        else {
+            partition_manager(hd);
+        }
+
+        gui_done();
+    }
+
     exit(0);
-   }
-#endif
-
- if( argc==2 && argv[1][0]>='1' && argv[1][0]<='8' )
-   {
-    hd+=argv[1][0]-'1';
-   }
-
- if( argc>=2 )
-   {
-    start_cmd(hd,argc,argv);
-   }
- else 
-   {
-    gui_init();
-    if( get_detected_os()==0 && /* bare_system */
-        get_startup_hd()!=0 && /* floppy */
-        get_disk_info(hd=get_startup_hd())->bm_type!=0 )
-      boot_manager(hd);
-    else
-      partition_manager(hd);
-    gui_done();
-   }
- exit(0);
-}/* main */
-
+}
 
 #define FORCE(x)    ((force) |=  (x))
 #define RESET(x)    ((force) &= ~(x))

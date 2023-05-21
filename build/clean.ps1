@@ -7,7 +7,7 @@ Clear-Host;
 # Required download locations for 3rd party components #
 ########################################################
 $ProgressPreference = 'SilentlyContinue' 
-$url_dosboxx = "https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v2023.03.31/dosbox-x-vsbuild-win64-20230401023040.zip";
+$url_dosboxx = "https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v2023.05.01/dosbox-x-vsbuild-win64-20230501152329.zip";
 
 #######################
 # Installing DOSBox-X #
@@ -71,7 +71,6 @@ finally
 	#########################
 	Write-Host "- Stopping process(es)";
 	try { $process_dosboxx = (Get-Process -inputObject $process_dosboxx -ErrorAction SilentlyContinue); } catch { $process_dosboxx = $null; } finally { if ($null -ne $process_dosboxx) { Stop-Process -inputObject $process_dosboxx; } }
-	try { $process_split = (Get-Process -inputObject $process_split -ErrorAction SilentlyContinue); } catch { $process_split = $null; } finally { if ($null -ne $process_split) { Stop-Process -inputObject $process_split; } }
 }
 
 ####################
@@ -80,15 +79,6 @@ finally
 Write-Host "- Stopping logging job(s)";
 Stop-Job -Name "DOSBox-X Logging";
 Remove-Job -Name "DOSBox-X Logging";
-
-#################################
-# Cleaning up tools #
-#################################
-Write-Host "- Cleaning up tools";
-Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x')) -Force -Recurse -ErrorAction SilentlyContinue
-Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\pklite')) -Force -Recurse -ErrorAction SilentlyContinue
-Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\pkzip')) -Force -Recurse -ErrorAction SilentlyContinue
-Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\unxutils')) -Force -Recurse -ErrorAction SilentlyContinue
 
 ###############################
 # Resetting build environment #
@@ -102,3 +92,19 @@ Get-ChildItem -Path $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSS
 $file_buildlog = [IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'build') + '\build.log');
 if(Test-path $file_buildlog) { Remove-Item $file_buildlog; }
 New-Item $file_buildlog | Out-Null;
+
+#################################
+# Cleaning up tools #
+#################################
+Write-Host "- Cleaning up tools";
+while (Test-Path(([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x')))) {
+    try {
+        Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\dosbox-x')) -Force -Recurse -ErrorAction Stop
+    }
+    catch {
+        Start-Sleep -seconds 1
+    }
+}
+Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\pklite')) -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\pkzip')) -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath $([IO.Path]::GetFullPath([IO.Path]::Combine($((Get-Item $PSScriptRoot).Parent.FullName),'tools') + '\unxutils')) -Force -Recurse -ErrorAction SilentlyContinue

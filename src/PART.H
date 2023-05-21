@@ -2,6 +2,7 @@
 #define PART_H
 
 #include <stddef.h>
+
 #include "EXT32.H"
 #include "PART_VTC.H"
 #include "PART_MEN.H"
@@ -65,55 +66,45 @@
 #define EXTENDED(p)      ((p)->flags & P_EXTENDED)
 #define BTS_LOADED(p)    ((p)->flags & P_BTS_LOADED)
 
-
-
-
-
-
-
-
 typedef struct Part		/* Internal partition record representation */
-    {
-     unsigned short fs_num;	/* fs number in the file system type table  */
-     unsigned short fs_type;
-     unsigned short mbr_row;
-     unsigned short tag;
-     unsigned long  flags;
-     unsigned long  fs_flags;
+{
+    unsigned short fs_num;	/* fs number in the file system type table  */
+    unsigned short fs_type;
+    unsigned short mbr_row;
+    unsigned short tag;
+    unsigned long  flags;
+    unsigned long  fs_flags;
 
-     Sector start_cyl;
-     Sector start_head;
-     Sector start_sect;
+    Sector start_cyl;
+    Sector start_head;
+    Sector start_sect;
 
-     Sector end_cyl;
-     Sector end_head;
-     Sector end_sect;
+    Sector end_cyl;
+    Sector end_head;
+    Sector end_sect;
 
-     Sector rel_sect;
-     Sector num_sect;
-     Sector last_sect;
-     Sector ext_base;
+    Sector rel_sect;
+    Sector num_sect;
+    Sector last_sect;
+    Sector ext_base;
 
-     Sector rel_sect_loaded;
-     void   *part_boot_sect;
-     void   *part_misc_info;
+    Sector rel_sect_loaded;
+    void   *part_boot_sect;
+    void   *part_misc_info;
 
-    } Part;
-
-
+} Part;
 
 typedef struct Menu
-    {
-     UInt8	menu_name[32];	/* If name[0]==0 record is unused           */
-     UInt32	boot_options;	/* boot options (bitmap)                    */
-     UInt16	boot_disk;	/* boot disk (device)                       */
-     UInt16	boot_part;	/* boot partition                           */
-     UInt32	additional_loader_data_offset;
-     UInt32	additional_boot_man_data_offset;
-     PartLayout	layout[4];	/* Partition layout for each of the disks   */
+{
+    UInt8	menu_name[32];	/* If name[0]==0 record is unused           */
+    UInt32	boot_options;	/* boot options (bitmap)                    */
+    UInt16	boot_disk;	/* boot disk (device)                       */
+    UInt16	boot_part;	/* boot partition                           */
+    UInt32	additional_loader_data_offset;
+    UInt32	additional_boot_man_data_offset;
+    PartLayout	layout[4];	/* Partition layout for each of the disks   */
 
-    } Menu;
-
+} Menu;
 
 #define BM_OPT_VIRUS_CHECK   0x0001
 #define BM_OPT_INSTALL_PM    0x0002

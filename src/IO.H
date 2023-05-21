@@ -10,7 +10,7 @@
 #ifndef __io__
     #define __io__
 
-    #include <defs.h>
+    #include "DEFS.H"
 
     #define O_RDONLY 0
     #define O_WRONLY 1
